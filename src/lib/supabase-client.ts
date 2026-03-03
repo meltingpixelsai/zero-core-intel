@@ -31,8 +31,8 @@ export async function getTradingSignals(token?: string): Promise<TradingSignal[]
   // Get recent positions with trade stats
   let query = sb
     .from("cortex_positions")
-    .select("token_mint, strategy, entry_price, exit_price, pnl_sol, status, created_at, updated_at")
-    .order("created_at", { ascending: false })
+    .select("token_mint, strategy, entry_price, exit_price, realized_pnl, status, opened_at, closed_at")
+    .order("opened_at", { ascending: false })
     .limit(50);
 
   if (token) {
@@ -53,7 +53,7 @@ export async function getTradingSignals(token?: string): Promise<TradingSignal[]
 
   const signals: TradingSignal[] = [];
   for (const [mint, trades] of byToken) {
-    const wins = trades.filter((t) => (t.pnl_sol ?? 0) > 0).length;
+    const wins = trades.filter((t) => (t.realized_pnl ?? 0) > 0).length;
     const closed = trades.filter((t) => t.status === "closed").length;
     const lastTrade = trades[0];
 
@@ -68,7 +68,7 @@ export async function getTradingSignals(token?: string): Promise<TradingSignal[]
       strategy: lastTrade.strategy || "unknown",
       recent_trades: trades.length,
       win_rate: closed > 0 ? Math.round((wins / closed) * 100) / 100 : 0,
-      last_trade_at: lastTrade.created_at,
+      last_trade_at: lastTrade.opened_at,
     });
   }
 
@@ -88,11 +88,11 @@ export async function getMarketRegime(): Promise<MarketRegime> {
   const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
   const [positionsRes, recentRes] = await Promise.all([
-    sb.from("cortex_positions").select("status, pnl_sol").eq("status", "open"),
+    sb.from("cortex_positions").select("status, realized_pnl").eq("status", "open"),
     sb
       .from("cortex_positions")
-      .select("pnl_sol, created_at")
-      .gte("created_at", oneDayAgo),
+      .select("realized_pnl, opened_at")
+      .gte("opened_at", oneDayAgo),
   ]);
 
   if (positionsRes.error) throw new Error(`CORTEX query failed: ${positionsRes.error.message}`);
@@ -102,7 +102,7 @@ export async function getMarketRegime(): Promise<MarketRegime> {
   const recentTrades = recentRes.data?.length ?? 0;
   const avgPnl =
     recentRes.data && recentRes.data.length > 0
-      ? recentRes.data.reduce((sum, t) => sum + (t.pnl_sol ?? 0), 0) / recentRes.data.length
+      ? recentRes.data.reduce((sum, t) => sum + (t.realized_pnl ?? 0), 0) / recentRes.data.length
       : 0;
 
   // Determine regime based on activity
