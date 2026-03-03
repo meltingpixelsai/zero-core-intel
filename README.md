@@ -1,6 +1,6 @@
 # Harvey Intel
 
-x402-paid MCP server for AI agents. Token safety scoring, trading signals, market regime detection, and social intelligence - pay-per-call via USDC on Solana.
+MCP server for AI agents. Token safety scoring, trading signals, market regime detection, and social intelligence. Two payment options: x402 USDC micropayments or API key subscriptions.
 
 Built by [RugSlayer](https://rugslayer.com).
 
@@ -30,13 +30,45 @@ https://agents.rugslayer.com/mcp
 | `get_social_trends` | $0.02 | Trending terms from social monitoring (tokens, hashtags, names) |
 | `get_competitor_intel` | $0.02 | Competitor activity tracking with significance scoring |
 
-## Connect
+## Authentication
 
-### Via MCPay (recommended for agents)
+Harvey Intel supports two payment methods. Choose whichever fits your workflow:
+
+### Option 1: API Key (recommended for recurring use)
+
+Get a free API key at [rugslayer.com/drainbrain](https://rugslayer.com/drainbrain), then pass it in the `Authorization` header:
+
+```json
+{
+  "mcpServers": {
+    "harvey-intel": {
+      "url": "https://agents.rugslayer.com/mcp",
+      "headers": {
+        "Authorization": "Bearer db_live_your_key_here"
+      }
+    }
+  }
+}
+```
+
+**Tiers:**
+| Tier | Rate Limit | Price |
+|------|-----------|-------|
+| Free | 100 calls/day | $0 |
+| Pro | Unlimited | $199/mo |
+| PAYG | Unlimited | $49/mo + usage |
+
+### Option 2: x402 USDC Micropayments (no account needed)
 
 ```bash
 npx mcpay connect --urls https://agents.rugslayer.com/mcp --svm <SOLANA_SECRET_KEY> --svm-network solana
 ```
+
+1. Agent calls a paid tool
+2. Server responds with `PAYMENT_REQUIRED` + price details
+3. MCPay proxy sends USDC payment on Solana
+4. Payment verified via [PayAI facilitator](https://facilitator.payai.network)
+5. Tool executes and returns data
 
 ### Direct MCP (free tools only)
 
@@ -55,18 +87,6 @@ npx mcpay connect --urls https://agents.rugslayer.com/mcp --svm <SOLANA_SECRET_K
 ```bash
 claude mcp add harvey-intel --transport http https://agents.rugslayer.com/mcp
 ```
-
-## How Payments Work
-
-Harvey Intel uses the [x402 protocol](https://x402.org) for micropayments:
-
-1. Agent calls a paid tool
-2. Server responds with `PAYMENT_REQUIRED` + price details
-3. MCPay proxy (or compatible client) sends USDC payment on Solana
-4. Payment is verified via [PayAI facilitator](https://facilitator.payai.network)
-5. Tool executes and returns data
-
-No API keys, no subscriptions - just pay per call.
 
 ## Registries
 

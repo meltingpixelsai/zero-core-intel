@@ -2,8 +2,15 @@ import { config } from "../config.js";
 
 const startTime = Date.now();
 
-export function listTools(): { tools: Array<{ name: string; description: string; price: string; input: string }> } {
+export function listTools(): {
+  auth_methods: string[];
+  tools: Array<{ name: string; description: string; price: string; input: string }>;
+} {
   return {
+    auth_methods: [
+      "x402 USDC micropayments (pay per call, no account needed)",
+      "API key (Bearer db_live_xxx) - get keys at rugslayer.com/drainbrain",
+    ],
     tools: [
       {
         name: "list_tools",
