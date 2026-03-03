@@ -14,6 +14,7 @@ import {
   trackUsage,
   ApiKeyError,
 } from "./lib/api-key-auth.js";
+import { registerDiscoveryRoutes } from "./discovery.js";
 
 // ── Shared tool callback helpers ─────────────────────────────
 
@@ -257,6 +258,9 @@ const app = new Hono();
 // Health + pricing endpoints (outside MCP, for monitoring/discovery)
 app.get("/health", (c) => c.json(health()));
 app.get("/pricing", (c) => c.json(listTools()));
+
+// Agent discovery routes (llms.txt, .well-known/agent-card.json, .well-known/mcp.json)
+registerDiscoveryRoutes(app);
 
 // MCP handler with dual auth routing
 app.all("*", async (c) => {
