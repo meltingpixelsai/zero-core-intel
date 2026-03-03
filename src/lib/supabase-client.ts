@@ -213,23 +213,23 @@ export async function getCompetitorIntel(competitor?: string): Promise<Competito
 
   let query = sb
     .from("synthia_competitor_intel")
-    .select("competitor, event_type, summary, significance, detected_at, source")
-    .order("detected_at", { ascending: false })
+    .select("competitor_name, intel_type, summary, significance, created_at, source_url")
+    .order("created_at", { ascending: false })
     .limit(20);
 
   if (competitor) {
-    query = query.ilike("competitor", `%${competitor}%`);
+    query = query.ilike("competitor_name", `%${competitor}%`);
   }
 
   const { data, error } = await query;
   if (error) throw new Error(`Synthia query failed: ${error.message}`);
 
   return (data ?? []).map((row) => ({
-    competitor: row.competitor,
-    event_type: row.event_type,
+    competitor: row.competitor_name,
+    event_type: row.intel_type,
     summary: row.summary,
     significance: row.significance || "medium",
-    detected_at: row.detected_at,
-    source: row.source,
+    detected_at: row.created_at,
+    source: row.source_url,
   }));
 }
