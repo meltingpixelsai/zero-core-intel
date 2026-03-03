@@ -1,0 +1,36 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.meltingpixelsai/harvey-intel",
+  "description": "Token safety, trading signals, and social intel for AI agents. Pay-per-call USDC.",
+  "repository": {
+    "url": "https://github.com/meltingpixelsai/harvey-intel",
+    "source": "github"
+  },
+  "version": "1.0.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@meltingpixels/harvey-intel",
+      "version": "1.0.0",
+      "transport": {
+        "type": "streamable-http",
+        "url": "https://agents.rugslayer.com/mcp"
+      }
+    }
+  ],
+  "_meta": {
+    "x402": {
+      "network": "solana",
+      "currency": "USDC",
+      "facilitator": "https://facilitator.payai.network",
+      "tools": {
+        "scan_token": "$0.01",
+        "get_trading_signals": "$0.02",
+        "get_market_regime": "$0.02",
+        "get_social_trends": "$0.02",
+        "get_competitor_intel": "$0.02"
+      },
+      "free_tools": ["list_tools", "health", "scan_token_preview"]
+    }
+  }
+}

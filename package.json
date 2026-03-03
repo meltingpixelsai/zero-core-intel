@@ -1,9 +1,17 @@
 {
-  "name": "harvey-intel",
+  "name": "@meltingpixels/harvey-intel",
   "version": "1.0.0",
-  "description": "x402-paid MCP server for DrainBrain, CORTEX, and Synthia intelligence feeds",
-  "private": true,
+  "description": "x402-paid MCP server for DrainBrain token safety, CORTEX trading signals, and Synthia social intelligence. Pay-per-query via USDC on Solana.",
   "type": "module",
+  "mcpName": "io.github.meltingpixelsai/harvey-intel",
+  "keywords": ["mcp", "x402", "solana", "usdc", "ai-agents", "token-safety", "trading-signals", "drainbrain"],
+  "author": "MeltingPixels <jeremy@meltingpixels.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meltingpixelsai/harvey-intel"
+  },
+  "homepage": "https://agents.rugslayer.com",
   "scripts": {
     "build": "tsc",
     "dev": "tsx watch src/index.ts",
