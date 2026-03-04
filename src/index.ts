@@ -15,6 +15,7 @@ import {
   ApiKeyError,
 } from "./lib/api-key-auth.js";
 import { registerDiscoveryRoutes } from "./discovery.js";
+import { landingHtml, devHtml } from "./landing.js";
 
 // ── Shared tool callback helpers ─────────────────────────────
 
@@ -261,6 +262,10 @@ app.get("/pricing", (c) => c.json(listTools()));
 
 // Agent discovery routes (llms.txt, .well-known/agent-card.json, .well-known/mcp.json)
 registerDiscoveryRoutes(app);
+
+// Landing pages for human visitors
+app.get("/", (c) => c.html(landingHtml()));
+app.get("/dev", (c) => c.html(devHtml()));
 
 // MCP handler with dual auth routing
 app.all("*", async (c) => {
