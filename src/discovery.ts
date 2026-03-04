@@ -11,13 +11,14 @@ export function registerDiscoveryRoutes(app: Hono): void {
     });
   });
 
-  // A2A Agent Card — Google A2A protocol discovery
-  app.get("/.well-known/agent-card.json", (c) => {
-    return c.json(AGENT_CARD, 200, {
+  // A2A Agent Card — Google A2A protocol discovery (v0.3)
+  const agentCardHandler = (c: any) =>
+    c.json(AGENT_CARD, 200, {
       "Cache-Control": "public, max-age=3600",
       "Access-Control-Allow-Origin": "*",
     });
-  });
+  app.get("/.well-known/agent-card.json", agentCardHandler);
+  app.get("/.well-known/agent.json", agentCardHandler);
 
   // MCP Server Card — enriched MCP metadata
   app.get("/.well-known/mcp.json", (c) => {
@@ -72,20 +73,38 @@ const AGENT_CARD = {
   name: "Harvey Intel",
   description:
     "MCP server for AI agents providing Solana token safety scoring (DrainBrain ML), trading signals (CORTEX), market regime detection, and social intelligence (Synthia). Pay per call with USDC or use API keys.",
-  url: "https://agents.rugslayer.com/mcp",
   version: "1.0.0",
+  supportedInterfaces: [
+    {
+      url: "https://agents.rugslayer.com/mcp",
+      protocolBinding: "HTTP+JSON",
+      protocolVersion: "0.3",
+    },
+  ],
   provider: {
     organization: "RugSlayer",
     url: "https://rugslayer.com",
   },
   documentationUrl: "https://rugslayer.com/drainbrain",
+  iconUrl: "https://rugslayer.com/icon.svg",
   capabilities: {
     streaming: false,
     pushNotifications: false,
     stateTransitionHistory: false,
   },
-  authentication: {
-    schemes: ["Bearer", "x402"],
+  securitySchemes: {
+    apiKey: {
+      httpSecurityScheme: {
+        scheme: "bearer",
+        bearerFormat: "DrainBrain API Key (db_live_xxx)",
+      },
+    },
+    x402: {
+      httpSecurityScheme: {
+        scheme: "x402",
+        bearerFormat: "USDC micropayment on Solana",
+      },
+    },
   },
   defaultInputModes: ["application/json"],
   defaultOutputModes: ["application/json"],
