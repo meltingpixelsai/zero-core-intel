@@ -21,15 +21,21 @@ export function registerDiscoveryRoutes(app: Hono): void {
   app.get("/.well-known/agent.json", agentCardHandler);
 
   // MCP Server Card — enriched MCP metadata
+
   app.get("/.well-known/mcp.json", (c) => {
     return c.json(MCP_CARD, 200, {
       "Cache-Control": "public, max-age=3600",
       "Access-Control-Allow-Origin": "*",
     });
-app.get("/.well-known/mcp/server-card.json", (c) => {    return c.json(MCP_CARD, 200, {      "Cache-Control": "public, max-age=3600",      "Access-Control-Allow-Origin": "*",    });  });
+  });
+
+  app.get("/.well-known/mcp/server-card.json", (c) => {
+    return c.json(MCP_CARD, 200, {
+      "Cache-Control": "public, max-age=3600",
+      "Access-Control-Allow-Origin": "*",
+    });
   });
 }
-
 // ── Static Content ────────────────────────────────────────────
 
 const LLMS_TXT = `# Harvey Intel - Agent Intelligence MCP Server
