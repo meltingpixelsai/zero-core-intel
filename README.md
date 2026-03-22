@@ -4,6 +4,8 @@ MCP server for AI agents. Token safety scoring, trading signals, market regime d
 
 Built by [RugSlayer](https://rugslayer.com).
 
+[![Harvey Intel MCP server](https://glama.ai/mcp/servers/meltingpixelsai/harvey-intel/badges/card.svg)](https://glama.ai/mcp/servers/meltingpixelsai/harvey-intel)
+
 ## Live Endpoint
 
 ```
