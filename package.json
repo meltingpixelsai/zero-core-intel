@@ -1,15 +1,15 @@
 {
-  "name": "@meltingpixels/harvey-intel",
+  "name": "@meltingpixels/zero-core-intel",
   "version": "1.0.0",
-  "description": "x402-paid MCP server for DrainBrain token safety, CORTEX trading signals, and Synthia social intelligence. Pay-per-query via USDC on Solana.",
+  "description": "x402-paid MCP server for DrainBrain token safety, CORTEX trading signals, and Synthia social intelligence. Pay-per-query via USDC on Solana. Zero Core (formerly Harvey) Intel.",
   "type": "module",
-  "mcpName": "io.github.meltingpixelsai/harvey-intel",
-  "keywords": ["mcp", "x402", "solana", "usdc", "ai-agents", "token-safety", "trading-signals", "drainbrain"],
+  "mcpName": "io.github.meltingpixelsai/zero-core-intel",
+  "keywords": ["mcp", "x402", "solana", "usdc", "ai-agents", "token-safety", "trading-signals", "drainbrain", "zero-core"],
   "author": "MeltingPixels <jeremy@meltingpixels.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/meltingpixelsai/harvey-intel"
+    "url": "https://github.com/meltingpixelsai/zero-core-intel"
   },
   "homepage": "https://agents.rugslayer.com",
   "scripts": {
