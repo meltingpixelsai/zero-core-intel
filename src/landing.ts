@@ -13,7 +13,7 @@ const SERVER = {
     { name: "list_tools", desc: "List all tools with pricing", price: "FREE" },
     { name: "health", desc: "Server status and payment config", price: "FREE" },
     { name: "scan_token_preview", desc: "Quick risk level for a Solana token", price: "FREE" },
-    { name: "scan_token", desc: "Full DrainBrain 5-model AI risk analysis", price: "$0.01" },
+    { name: "scan_token", desc: "Full DrainBrain ML risk analysis", price: "$0.01" },
     { name: "get_trading_signals", desc: "CORTEX AI trading signals", price: "$0.02" },
     { name: "get_market_regime", desc: "Market regime detection (HOT/NORMAL/COLD)", price: "$0.02" },
     { name: "get_social_trends", desc: "Social media trend intelligence", price: "$0.02" },

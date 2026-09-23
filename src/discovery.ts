@@ -120,7 +120,7 @@ const AGENT_CARD = {
       id: "scan-token",
       name: "Token Safety Scan",
       description:
-        "Full DrainBrain ML analysis for a Solana token. 5-model ensemble returns score 0-100, risk level, rug stage, honeypot detection, risk flags, temporal prediction.",
+        "Full DrainBrain ML analysis for a Solana token. ML ensemble returns score 0-100, risk level, rug stage, honeypot detection, risk flags, temporal prediction.",
       tags: ["solana", "security", "rug-pull", "ml", "defi"],
       examples: [
         "Is this Solana token safe?",
@@ -243,7 +243,7 @@ const MCP_CARD = {
     {
       name: "scan_token",
       description:
-        "Full DrainBrain ML analysis. 5-model ensemble returns score 0-100, risk level, rug stage (0-5), honeypot detection, risk flags, temporal prediction.",
+        "Full DrainBrain ML analysis. ML ensemble returns score 0-100, risk level, rug stage (0-5), honeypot detection, risk flags, temporal prediction.",
       price: "$0.01 USDC",
       input_schema: {
         type: "object",

@@ -71,7 +71,7 @@ function registerFreeTools(server: any): void {
 function registerPremiumTools(server: any): void {
   server.tool(
     "scan_token",
-    "Full DrainBrain risk analysis for a Solana token using a 5-model AI ensemble. Returns score 0-100, risk level, rug stage, honeypot detection, risk flags, and temporal prediction.",
+    "Full DrainBrain risk analysis for a Solana token using an ML ensemble. Returns score 0-100, risk level, rug stage, honeypot detection, risk flags, and temporal prediction.",
     { mint: z.string().describe("Solana token mint address (base58)") },
     async ({ mint }: { mint: string }) => {
       try {
@@ -144,7 +144,7 @@ const paidHandler = createMcpPaidHandler(
     // Paid tools with x402 pricing
     server.paidTool(
       "scan_token",
-      "Full DrainBrain risk analysis for a Solana token using a 5-model AI ensemble. Returns score 0-100, risk level, rug stage, honeypot detection, risk flags, and temporal prediction.",
+      "Full DrainBrain risk analysis for a Solana token using an ML ensemble. Returns score 0-100, risk level, rug stage, honeypot detection, risk flags, and temporal prediction.",
       "$0.01",
       { mint: z.string().describe("Solana token mint address (base58)") },
       {},

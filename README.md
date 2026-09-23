@@ -96,7 +96,7 @@ claude mcp add harvey-intel --transport http https://agents.rugslayer.com/mcp
 
 ## Data Sources
 
-- **DrainBrain** - 5-model ML ensemble trained on 175K+ labeled Solana tokens
+- **DrainBrain** - ML ensemble trained on 175K+ labeled Solana tokens
 - **CORTEX** - Algorithmic trading system (SOL/JUP/RAY)
 - **Synthia** - Social intelligence monitoring across X, Telegram, and other platforms
 
