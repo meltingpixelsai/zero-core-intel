@@ -1,7 +1,7 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.meltingpixelsai/harvey-intel",
-  "description": "Token safety, trading signals, and social intel for AI agents. Pay-per-call USDC.",
+  "description": "Token safety and social intel for AI agents. Pay-per-call USDC.",
   "repository": {
     "url": "https://github.com/meltingpixelsai/harvey-intel",
     "source": "github"
@@ -25,8 +25,6 @@
       "facilitator": "https://facilitator.payai.network",
       "tools": {
         "scan_token": "$0.01",
-        "get_trading_signals": "$0.02",
-        "get_market_regime": "$0.02",
         "get_social_trends": "$0.02",
         "get_competitor_intel": "$0.02"
       },
