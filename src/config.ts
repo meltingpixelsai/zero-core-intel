@@ -25,6 +25,5 @@ export const config = {
   pricing: {
     scan_token: 0.01,
     get_social_trends: 0.02,
-    get_competitor_intel: 0.02,
   },
 } as const;

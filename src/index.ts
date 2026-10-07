@@ -6,7 +6,7 @@ import { z } from "zod";
 import { config } from "./config.js";
 import { listTools, health } from "./tools/discovery.js";
 import { scanTokenPreview, scanTokenFull } from "./tools/drainbrain.js";
-import { getSocialTrends, getCompetitorIntel } from "./tools/synthia.js";
+import { getSocialTrends } from "./tools/synthia.js";
 import {
   validateApiKey,
   checkDailyLimit,
@@ -66,7 +66,7 @@ function registerFreeTools(server: any): void {
   );
 }
 
-/** Register the 3 premium tools as regular (non-paid) tools */
+/** Register the 2 premium tools as regular (non-paid) tools */
 function registerPremiumTools(server: any): void {
   server.tool(
     "scan_token",
@@ -83,24 +83,11 @@ function registerPremiumTools(server: any): void {
 
   server.tool(
     "get_social_trends",
-    "Synthia social intelligence - trending terms, frequency, and sources from social media monitoring.",
+    "Most frequent capitalized terms, $tickers and hashtags in recent Moltbook posts by RugSlayer's own agents (RugSlayer, RelayZero), with counts, posting accounts and first/last seen. Not a market-wide social feed.",
     { hours: z.number().min(1).max(168).optional().describe("Lookback period in hours (default: 24, max: 168)") },
     async ({ hours }: { hours?: number }) => {
       try {
         return toolResult(await getSocialTrends(hours ?? 24));
-      } catch (err) {
-        return toolError(err);
-      }
-    }
-  );
-
-  server.tool(
-    "get_competitor_intel",
-    "Synthia competitor tracking - feature launches, pricing changes, and strategic moves.",
-    { competitor: z.string().optional().describe("Filter by competitor name (partial match)") },
-    async ({ competitor }: { competitor?: string }) => {
-      try {
-        return toolResult(await getCompetitorIntel(competitor));
       } catch (err) {
         return toolError(err);
       }
@@ -132,28 +119,13 @@ const paidHandler = createMcpPaidHandler(
 
     server.paidTool(
       "get_social_trends",
-      "Synthia social intelligence - trending terms, frequency, and sources from social media monitoring.",
+      "Most frequent capitalized terms, $tickers and hashtags in recent Moltbook posts by RugSlayer's own agents (RugSlayer, RelayZero), with counts, posting accounts and first/last seen. Not a market-wide social feed.",
       "$0.02",
       { hours: z.number().min(1).max(168).optional().describe("Lookback period in hours (default: 24, max: 168)") },
       {},
       async ({ hours }: { hours?: number }) => {
         try {
           return toolResult(await getSocialTrends(hours ?? 24));
-        } catch (err) {
-          return toolError(err);
-        }
-      }
-    );
-
-    server.paidTool(
-      "get_competitor_intel",
-      "Synthia competitor tracking - feature launches, pricing changes, and strategic moves.",
-      "$0.02",
-      { competitor: z.string().optional().describe("Filter by competitor name (partial match)") },
-      {},
-      async ({ competitor }: { competitor?: string }) => {
-        try {
-          return toolResult(await getCompetitorIntel(competitor));
         } catch (err) {
           return toolError(err);
         }

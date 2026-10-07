@@ -27,21 +27,19 @@ export async function getSocialTrends(hours: number = 24): Promise<SocialTrend[]
   const sb = getSupabase();
   const since = new Date(Date.now() - hours * 60 * 60 * 1000).toISOString();
 
-  // Query content posts and mentions for trend extraction
-  const [postsRes, mentionsRes] = await Promise.all([
-    sb
-      .from("content_posts")
-      .select("content, platform, created_at")
-      .gte("created_at", since)
-      .order("created_at", { ascending: false })
-      .limit(100),
-    sb
-      .from("synthia_mentions")
-      .select("content, source, created_at")
-      .gte("created_at", since)
-      .order("created_at", { ascending: false })
-      .limit(100),
-  ]);
+  // RugSlayer's own published posts (content_posts: Moltbook posts by the
+  // RugSlayer and RelayZero agents as of 2026-10-07). Until 2026-10-07 this
+  // selected columns content_posts doesn't have (content, platform), merged
+  // synthia_mentions (empty since 2026-03-03) and ignored the query error, so
+  // the tool returned an empty list. A failed query now throws.
+  const { data: posts, error } = await sb
+    .from("content_posts")
+    .select("tweet_text, account, created_at")
+    .eq("status", "posted")
+    .gte("created_at", since)
+    .order("created_at", { ascending: false })
+    .limit(100);
+  if (error) throw new Error(`content_posts query failed: ${error.message}`);
 
   // Aggregate terms from content
   const termMap = new Map<string, { count: number; sources: Set<string>; first: string; last: string }>();
@@ -68,11 +66,8 @@ export async function getSocialTrends(hours: number = 24): Promise<SocialTrend[]
     }
   };
 
-  for (const post of postsRes.data ?? []) {
-    processText(post.content || "", post.platform || "unknown", post.created_at);
-  }
-  for (const mention of mentionsRes.data ?? []) {
-    processText(mention.content || "", mention.source || "unknown", mention.created_at);
+  for (const post of posts ?? []) {
+    processText(post.tweet_text || "", post.account || "unknown", post.created_at);
   }
 
   // Sort by frequency, return top 20
@@ -86,39 +81,4 @@ export async function getSocialTrends(hours: number = 24): Promise<SocialTrend[]
     }))
     .sort((a, b) => b.frequency - a.frequency)
     .slice(0, 20);
-}
-
-export interface CompetitorIntel {
-  competitor: string;
-  event_type: string;
-  summary: string;
-  significance: "high" | "medium" | "low";
-  detected_at: string;
-  source?: string;
-}
-
-export async function getCompetitorIntel(competitor?: string): Promise<CompetitorIntel[]> {
-  const sb = getSupabase();
-
-  let query = sb
-    .from("synthia_competitor_intel")
-    .select("competitor_name, intel_type, summary, significance, created_at, source_url")
-    .order("created_at", { ascending: false })
-    .limit(20);
-
-  if (competitor) {
-    query = query.ilike("competitor_name", `%${competitor}%`);
-  }
-
-  const { data, error } = await query;
-  if (error) throw new Error(`Synthia query failed: ${error.message}`);
-
-  return (data ?? []).map((row) => ({
-    competitor: row.competitor_name,
-    event_type: row.intel_type,
-    summary: row.summary,
-    significance: row.significance || "medium",
-    detected_at: row.created_at,
-    source: row.source_url,
-  }));
 }

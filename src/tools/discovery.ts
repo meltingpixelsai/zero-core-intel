@@ -38,15 +38,9 @@ export function listTools(): {
       },
       {
         name: "get_social_trends",
-        description: "Synthia social intelligence - trending terms and sources",
+        description: "Term counts from RugSlayer's own agents' Moltbook posts",
         price: `$${config.pricing.get_social_trends} USDC`,
         input: "hours?: number",
-      },
-      {
-        name: "get_competitor_intel",
-        description: "Synthia competitor tracking - feature launches, pricing changes",
-        price: `$${config.pricing.get_competitor_intel} USDC`,
-        input: "competitor?: string",
       },
     ],
   };
