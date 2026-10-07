@@ -40,17 +40,15 @@ export function registerDiscoveryRoutes(app: Hono): void {
 
 const LLMS_TXT = `# Harvey Intel - Agent Intelligence MCP Server
 
-> MCP server for AI agents. Token safety scoring, trading signals, market regime detection, social intelligence.
+> MCP server for AI agents. Token safety scoring and social intelligence.
 > Two payment options: x402 USDC micropayments (no account) or API key subscriptions.
 > Built by RugSlayer.
 
-## Tools (8 total, 3 free + 5 paid)
+## Tools (6 total, 3 free + 3 paid)
 - [list_tools](https://agents.rugslayer.com/mcp): List all tools with pricing (FREE)
 - [health](https://agents.rugslayer.com/mcp): Server status and payment config (FREE)
 - [scan_token_preview](https://agents.rugslayer.com/mcp): Quick risk level check (FREE)
-- [scan_token](https://agents.rugslayer.com/mcp): Full DrainBrain ML analysis ($0.01)
-- [get_trading_signals](https://agents.rugslayer.com/mcp): CORTEX trading signals ($0.02)
-- [get_market_regime](https://agents.rugslayer.com/mcp): Market regime detection ($0.02)
+- [scan_token](https://agents.rugslayer.com/mcp): Full DrainBrain risk analysis ($0.01)
 - [get_social_trends](https://agents.rugslayer.com/mcp): Social intelligence ($0.02)
 - [get_competitor_intel](https://agents.rugslayer.com/mcp): Competitor tracking ($0.02)
 
@@ -65,8 +63,6 @@ const LLMS_TXT = `# Harvey Intel - Agent Intelligence MCP Server
 
 ## Pricing
 - scan_token: $0.01 USDC per call
-- get_trading_signals: $0.02 USDC per call
-- get_market_regime: $0.02 USDC per call
 - get_social_trends: $0.02 USDC per call
 - get_competitor_intel: $0.02 USDC per call
 
@@ -79,7 +75,7 @@ const LLMS_TXT = `# Harvey Intel - Agent Intelligence MCP Server
 const AGENT_CARD = {
   name: "Harvey Intel",
   description:
-    "MCP server for AI agents providing Solana token safety scoring (DrainBrain ML), trading signals (CORTEX), market regime detection, and social intelligence (Synthia). Pay per call with USDC or use API keys.",
+    "MCP server for AI agents providing Solana token safety scoring (DrainBrain) and social intelligence (Synthia). Pay per call with USDC or use API keys.",
   version: "1.0.0",
   supportedInterfaces: [
     {
@@ -120,38 +116,12 @@ const AGENT_CARD = {
       id: "scan-token",
       name: "Token Safety Scan",
       description:
-        "Full DrainBrain ML analysis for a Solana token. ML ensemble returns score 0-100, risk level, rug stage, honeypot detection, risk flags, temporal prediction.",
+        "Full DrainBrain analysis for a Solana token: a risk score (0-100) calibrated on the real outcomes of tokens RugSlayer scanned, risk level, rug stage, honeypot detection, risk flags, temporal prediction (beta).",
       tags: ["solana", "security", "rug-pull", "ml", "defi"],
       examples: [
         "Is this Solana token safe?",
         "Scan token for rug pull risk",
         "Check if token is a honeypot",
-      ],
-      inputModes: ["application/json"],
-      outputModes: ["application/json"],
-    },
-    {
-      id: "trading-signals",
-      name: "CORTEX Trading Signals",
-      description:
-        "AI-generated trading signals with direction, confidence score, and historical win rate for Solana tokens.",
-      tags: ["solana", "trading", "signals", "ai"],
-      examples: [
-        "Get trading signals for SOL",
-        "What direction is the market going?",
-      ],
-      inputModes: ["application/json"],
-      outputModes: ["application/json"],
-    },
-    {
-      id: "market-regime",
-      name: "Market Regime Detection",
-      description:
-        "Detect whether the Solana market is HOT, NORMAL, or COLD based on graduation velocity and on-chain activity.",
-      tags: ["solana", "market", "regime", "analysis"],
-      examples: [
-        "Is the market hot or cold right now?",
-        "What's the current market regime?",
       ],
       inputModes: ["application/json"],
       outputModes: ["application/json"],
@@ -190,7 +160,7 @@ const MCP_CARD = {
   name: "harvey-intel",
   display_name: "Harvey Intel - Agent Intelligence MCP Server",
   description:
-    "MCP server for AI agents. Token safety scoring via DrainBrain ML, CORTEX trading signals, market regime detection, and Synthia social intelligence. Pay per call with USDC or use API keys.",
+    "MCP server for AI agents. Token safety scoring via DrainBrain and Synthia social intelligence. Pay per call with USDC or use API keys.",
   version: "1.0.0",
   vendor: "RugSlayer",
   homepage: "https://rugslayer.com/drainbrain",
@@ -202,17 +172,15 @@ const MCP_CARD = {
     free_tools: ["list_tools", "health", "scan_token_preview"],
     paid_tools: {
       scan_token: "$0.01",
-      get_trading_signals: "$0.02",
-      get_market_regime: "$0.02",
       get_social_trends: "$0.02",
       get_competitor_intel: "$0.02",
     },
     payment_methods: ["x402_usdc_solana", "api_key_bearer"],
-    subscription_url: "https://rugslayer.com/pricing",
+    subscription_url: "https://rugslayer.com/drainbrain",
   },
   rate_limits: {
     free_api_key: "100 calls/day",
-    pro_api_key: "10000 calls/min",
+    paid_api_key: "monthly allowance (Builder 10,000 / Scale 100,000 scans)",
     x402: "unlimited (pay per call)",
   },
   tools: [
@@ -243,7 +211,7 @@ const MCP_CARD = {
     {
       name: "scan_token",
       description:
-        "Full DrainBrain ML analysis. ML ensemble returns score 0-100, risk level, rug stage (0-5), honeypot detection, risk flags, temporal prediction.",
+        "Full DrainBrain analysis: a risk score (0-100) calibrated on the real outcomes of tokens RugSlayer scanned, risk level, rug stage (0-5), honeypot detection, risk flags, temporal prediction (beta).",
       price: "$0.01 USDC",
       input_schema: {
         type: "object",
@@ -252,23 +220,6 @@ const MCP_CARD = {
           mint: { type: "string", description: "Solana token mint address (base58)" },
         },
       },
-    },
-    {
-      name: "get_trading_signals",
-      description: "CORTEX trading signals - direction, confidence, win rate for Solana tokens.",
-      price: "$0.02 USDC",
-      input_schema: {
-        type: "object",
-        properties: {
-          token: { type: "string", description: "Filter by token mint address (optional)" },
-        },
-      },
-    },
-    {
-      name: "get_market_regime",
-      description: "Market regime detection - HOT/NORMAL/COLD with graduation velocity and activity metrics.",
-      price: "$0.02 USDC",
-      input_schema: { type: "object", properties: {} },
     },
     {
       name: "get_social_trends",

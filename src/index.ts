@@ -6,7 +6,6 @@ import { z } from "zod";
 import { config } from "./config.js";
 import { listTools, health } from "./tools/discovery.js";
 import { scanTokenPreview, scanTokenFull } from "./tools/drainbrain.js";
-import { getTradingSignals, getMarketRegime } from "./tools/cortex.js";
 import { getSocialTrends, getCompetitorIntel } from "./tools/synthia.js";
 import {
   validateApiKey,
@@ -67,41 +66,15 @@ function registerFreeTools(server: any): void {
   );
 }
 
-/** Register the 5 premium tools as regular (non-paid) tools */
+/** Register the 3 premium tools as regular (non-paid) tools */
 function registerPremiumTools(server: any): void {
   server.tool(
     "scan_token",
-    "Full DrainBrain risk analysis for a Solana token using an ML ensemble. Returns score 0-100, risk level, rug stage, honeypot detection, risk flags, and temporal prediction.",
+    "Full DrainBrain risk analysis for a Solana token: a risk score calibrated on the real outcomes of tokens RugSlayer scanned. Returns score 0-100, risk level, rug stage, honeypot detection, risk flags, and temporal prediction.",
     { mint: z.string().describe("Solana token mint address (base58)") },
     async ({ mint }: { mint: string }) => {
       try {
         return toolResult(await scanTokenFull(mint));
-      } catch (err) {
-        return toolError(err);
-      }
-    }
-  );
-
-  server.tool(
-    "get_trading_signals",
-    "CORTEX trading signals - AI-generated direction, confidence score, and win rate for Solana tokens.",
-    { token: z.string().optional().describe("Filter by specific token mint address") },
-    async ({ token }: { token?: string }) => {
-      try {
-        return toolResult(await getTradingSignals(token));
-      } catch (err) {
-        return toolError(err);
-      }
-    }
-  );
-
-  server.tool(
-    "get_market_regime",
-    "CORTEX market regime detection - HOT/NORMAL/COLD with graduation velocity and activity metrics.",
-    {},
-    async () => {
-      try {
-        return toolResult(await getMarketRegime());
       } catch (err) {
         return toolError(err);
       }
@@ -144,43 +117,13 @@ const paidHandler = createMcpPaidHandler(
     // Paid tools with x402 pricing
     server.paidTool(
       "scan_token",
-      "Full DrainBrain risk analysis for a Solana token using an ML ensemble. Returns score 0-100, risk level, rug stage, honeypot detection, risk flags, and temporal prediction.",
+      "Full DrainBrain risk analysis for a Solana token: a risk score calibrated on the real outcomes of tokens RugSlayer scanned. Returns score 0-100, risk level, rug stage, honeypot detection, risk flags, and temporal prediction.",
       "$0.01",
       { mint: z.string().describe("Solana token mint address (base58)") },
       {},
       async ({ mint }: { mint: string }) => {
         try {
           return toolResult(await scanTokenFull(mint));
-        } catch (err) {
-          return toolError(err);
-        }
-      }
-    );
-
-    server.paidTool(
-      "get_trading_signals",
-      "CORTEX trading signals - AI-generated direction, confidence score, and win rate for Solana tokens.",
-      "$0.02",
-      { token: z.string().optional().describe("Filter by specific token mint address") },
-      {},
-      async ({ token }: { token?: string }) => {
-        try {
-          return toolResult(await getTradingSignals(token));
-        } catch (err) {
-          return toolError(err);
-        }
-      }
-    );
-
-    server.paidTool(
-      "get_market_regime",
-      "CORTEX market regime detection - HOT/NORMAL/COLD with graduation velocity and activity metrics.",
-      "$0.02",
-      {},
-      {},
-      async () => {
-        try {
-          return toolResult(await getMarketRegime());
         } catch (err) {
           return toolError(err);
         }

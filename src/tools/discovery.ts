@@ -37,18 +37,6 @@ export function listTools(): {
         input: "mint: string",
       },
       {
-        name: "get_trading_signals",
-        description: "CORTEX trading signals - direction, confidence, win rate",
-        price: `$${config.pricing.get_trading_signals} USDC`,
-        input: "token?: string",
-      },
-      {
-        name: "get_market_regime",
-        description: "CORTEX market regime - HOT/NORMAL/COLD with activity metrics",
-        price: `$${config.pricing.get_market_regime} USDC`,
-        input: "(none)",
-      },
-      {
         name: "get_social_trends",
         description: "Synthia social intelligence - trending terms and sources",
         price: `$${config.pricing.get_social_trends} USDC`,

@@ -1,7 +1,7 @@
 {
   "name": "@meltingpixels/zero-core-intel",
   "version": "1.0.0",
-  "description": "x402-paid MCP server for DrainBrain token safety, CORTEX trading signals, and Synthia social intelligence. Pay-per-query via USDC on Solana. Zero Core (formerly Harvey) Intel.",
+  "description": "x402-paid MCP server for DrainBrain token safety and Synthia social intelligence. Pay-per-query via USDC on Solana. Zero Core (formerly Harvey) Intel.",
   "type": "module",
   "mcpName": "io.github.meltingpixelsai/zero-core-intel",
   "keywords": ["mcp", "x402", "solana", "usdc", "ai-agents", "token-safety", "trading-signals", "drainbrain", "zero-core"],

@@ -1,6 +1,6 @@
 # Harvey Intel
 
-MCP server for AI agents. Token safety scoring, trading signals, market regime detection, and social intelligence. Two payment options: x402 USDC micropayments or API key subscriptions.
+MCP server for AI agents. Token safety scoring and social intelligence. Two payment options: x402 USDC micropayments or API key subscriptions.
 
 Built by [RugSlayer](https://rugslayer.com).
 
@@ -24,9 +24,7 @@ https://agents.rugslayer.com/mcp
 
 | Tool | Price | Description |
 |------|-------|-------------|
-| `scan_token` | $0.01 | Full DrainBrain ML risk analysis - score, honeypot, rug stage, risk flags, temporal prediction |
-| `get_trading_signals` | $0.02 | CORTEX trading signals - direction, confidence, win rate per token |
-| `get_market_regime` | $0.02 | Market regime detection - HOT/NORMAL/COLD with velocity metrics |
+| `scan_token` | $0.01 | Full DrainBrain risk analysis - outcome-calibrated score, honeypot, rug stage, risk flags, temporal prediction (beta) |
 | `get_social_trends` | $0.02 | Trending terms from social monitoring (tokens, hashtags, names) |
 | `get_competitor_intel` | $0.02 | Competitor activity tracking with significance scoring |
 
@@ -96,8 +94,7 @@ claude mcp add harvey-intel --transport http https://agents.rugslayer.com/mcp
 
 ## Data Sources
 
-- **DrainBrain** - ML ensemble trained on 175K+ labeled Solana tokens
-- **CORTEX** - Algorithmic trading system (SOL/JUP/RAY)
+- **DrainBrain** - risk score calibrated on the real outcomes of tokens RugSlayer scanned
 - **Synthia** - Social intelligence monitoring across X, Telegram, and other platforms
 
 ## License

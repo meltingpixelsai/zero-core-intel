@@ -24,8 +24,6 @@ export const config = {
   // Tool pricing (in USD)
   pricing: {
     scan_token: 0.01,
-    get_trading_signals: 0.02,
-    get_market_regime: 0.02,
     get_social_trends: 0.02,
     get_competitor_intel: 0.02,
   },
