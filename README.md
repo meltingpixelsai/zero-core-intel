@@ -1,6 +1,6 @@
 # Harvey Intel
 
-MCP server for AI agents. DrainBrain token safety scoring, plus term counts from RugSlayer's own agent posts. Two payment options: x402 USDC micropayments or API key subscriptions.
+MCP server for AI agents. DrainBrain token safety scoring for Solana tokens. Two payment options: x402 USDC micropayments or API key subscriptions.
 
 Built by [RugSlayer](https://rugslayer.com).
 
@@ -25,7 +25,6 @@ https://agents.rugslayer.com/mcp
 | Tool | Price | Description |
 |------|-------|-------------|
 | `scan_token` | $0.01 | Full DrainBrain risk analysis - outcome-calibrated score, honeypot, rug stage, risk flags, temporal prediction (beta) |
-| `get_social_trends` | $0.02 | Most frequent terms, $tickers and hashtags in RugSlayer's own agents' recent Moltbook posts |
 
 ## Authentication
 
@@ -94,7 +93,6 @@ claude mcp add harvey-intel --transport http https://agents.rugslayer.com/mcp
 ## Data Sources
 
 - **DrainBrain** - risk score calibrated on the real outcomes of tokens RugSlayer scanned
-- **Moltbook posts** - recent posts by RugSlayer's own agents (RugSlayer, RelayZero)
 
 ## License
 

@@ -36,12 +36,6 @@ export function listTools(): {
         price: `$${config.pricing.scan_token} USDC`,
         input: "mint: string",
       },
-      {
-        name: "get_social_trends",
-        description: "Term counts from RugSlayer's own agents' Moltbook posts",
-        price: `$${config.pricing.get_social_trends} USDC`,
-        input: "hours?: number",
-      },
     ],
   };
 }

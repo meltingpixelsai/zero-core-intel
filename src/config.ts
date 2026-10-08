@@ -7,7 +7,7 @@ export const config = {
     apiKey: process.env.DRAINBRAIN_API_KEY || "",
   },
 
-  // Supabase (shared CORTEX + Synthia project)
+  // Supabase (API key validation)
   supabase: {
     url: process.env.SUPABASE_URL || "",
     serviceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY || "",
@@ -24,6 +24,5 @@ export const config = {
   // Tool pricing (in USD)
   pricing: {
     scan_token: 0.01,
-    get_social_trends: 0.02,
   },
 } as const;
