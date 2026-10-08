@@ -40,16 +40,15 @@ export function registerDiscoveryRoutes(app: Hono): void {
 
 const LLMS_TXT = `# Harvey Intel - Agent Intelligence MCP Server
 
-> MCP server for AI agents. DrainBrain token safety scoring, plus term counts from RugSlayer's own agent posts.
+> MCP server for AI agents. DrainBrain token safety scoring for Solana tokens.
 > Two payment options: x402 USDC micropayments (no account) or API key subscriptions.
 > Built by RugSlayer.
 
-## Tools (5 total, 3 free + 2 paid)
+## Tools (4 total, 3 free + 1 paid)
 - [list_tools](https://agents.rugslayer.com/mcp): List all tools with pricing (FREE)
 - [health](https://agents.rugslayer.com/mcp): Server status and payment config (FREE)
 - [scan_token_preview](https://agents.rugslayer.com/mcp): Quick risk level check (FREE)
 - [scan_token](https://agents.rugslayer.com/mcp): Full DrainBrain risk analysis ($0.01)
-- [get_social_trends](https://agents.rugslayer.com/mcp): Term counts from RugSlayer's own agents' Moltbook posts ($0.02)
 
 ## Connection
 - [MCP Endpoint](https://agents.rugslayer.com/mcp): Connect directly via MCP
@@ -62,7 +61,6 @@ const LLMS_TXT = `# Harvey Intel - Agent Intelligence MCP Server
 
 ## Pricing
 - scan_token: $0.01 USDC per call
-- get_social_trends: $0.02 USDC per call
 
 ## Optional
 - [DrainBrain Docs](https://rugslayer.com/drainbrain): Full API documentation
@@ -73,7 +71,7 @@ const LLMS_TXT = `# Harvey Intel - Agent Intelligence MCP Server
 const AGENT_CARD = {
   name: "Harvey Intel",
   description:
-    "MCP server for AI agents providing Solana token safety scoring (DrainBrain), plus term counts from RugSlayer's own Moltbook agent posts. Pay per call with USDC or use API keys.",
+    "MCP server for AI agents providing Solana token safety scoring (DrainBrain). Pay per call with USDC or use API keys.",
   version: "1.0.0",
   supportedInterfaces: [
     {
@@ -124,19 +122,6 @@ const AGENT_CARD = {
       inputModes: ["application/json"],
       outputModes: ["application/json"],
     },
-    {
-      id: "social-trends",
-      name: "Agent Post Terms",
-      description:
-        "Most frequent capitalized terms, $tickers and hashtags in recent Moltbook posts by RugSlayer's own agents (RugSlayer, RelayZero), with counts, posting accounts and first/last seen. Not a market-wide social feed.",
-      tags: ["social", "trends", "moltbook"],
-      examples: [
-        "Which terms do RugSlayer's agents post about most?",
-        "Show term counts for the last 24 hours",
-      ],
-      inputModes: ["application/json"],
-      outputModes: ["application/json"],
-    },
   ],
 };
 
@@ -145,7 +130,7 @@ const MCP_CARD = {
   name: "harvey-intel",
   display_name: "Harvey Intel - Agent Intelligence MCP Server",
   description:
-    "MCP server for AI agents. Token safety scoring via DrainBrain, plus term counts from RugSlayer's own Moltbook agent posts. Pay per call with USDC or use API keys.",
+    "MCP server for AI agents. Solana token safety scoring via DrainBrain. Pay per call with USDC or use API keys.",
   version: "1.0.0",
   vendor: "RugSlayer",
   homepage: "https://rugslayer.com/drainbrain",
@@ -157,7 +142,6 @@ const MCP_CARD = {
     free_tools: ["list_tools", "health", "scan_token_preview"],
     paid_tools: {
       scan_token: "$0.01",
-      get_social_trends: "$0.02",
     },
     payment_methods: ["x402_usdc_solana", "api_key_bearer"],
     subscription_url: "https://rugslayer.com/drainbrain",
@@ -205,20 +189,6 @@ const MCP_CARD = {
         },
       },
     },
-    {
-      name: "get_social_trends",
-      description: "Most frequent capitalized terms, $tickers and hashtags in recent Moltbook posts by RugSlayer's own agents (RugSlayer, RelayZero), with counts, posting accounts and first/last seen. Not a market-wide social feed.",
-      price: "$0.02 USDC",
-      input_schema: {
-        type: "object",
-        properties: {
-          hours: {
-            type: "number",
-            description: "Lookback period in hours (default: 24, max: 168)",
-          },
-        },
-      },
-    },
   ],
   install: {
     npm: "npx -y @meltingpixels/harvey-intel",
@@ -230,5 +200,5 @@ const MCP_CARD = {
     },
   },
   categories: ["security", "blockchain", "defi", "trading"],
-  tags: ["solana", "rug-pull", "ml", "token-scanner", "trading-signals", "social-intelligence", "x402", "usdc"],
+  tags: ["solana", "rug-pull", "ml", "token-scanner", "x402", "usdc"],
 };

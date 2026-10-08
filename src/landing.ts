@@ -14,7 +14,6 @@ const SERVER = {
     { name: "health", desc: "Server status and payment config", price: "FREE" },
     { name: "scan_token_preview", desc: "Quick risk level for a Solana token", price: "FREE" },
     { name: "scan_token", desc: "Full DrainBrain risk analysis", price: "$0.01" },
-    { name: "get_social_trends", desc: "Term counts from RugSlayer's own agents' Moltbook posts", price: "$0.02" },
   ],
 };
 

@@ -24,8 +24,7 @@
       "currency": "USDC",
       "facilitator": "https://facilitator.payai.network",
       "tools": {
-        "scan_token": "$0.01",
-        "get_social_trends": "$0.02"
+        "scan_token": "$0.01"
       },
       "free_tools": ["list_tools", "health", "scan_token_preview"]
     }
