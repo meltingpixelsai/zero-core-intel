@@ -1,5 +1,10 @@
 # Harvey Intel
 
+> **Retired.** Zero Core Intel (formerly Harvey Intel) stopped on October 23, 2026, and
+> agents.rugslayer.com now answers 410. RugSlayer and its DrainBrain API end on October 29, 2026.
+> This repository is archived and kept for reference only: nothing below is live, and no tool, API key
+> or payment route works. Contact: j@rugslayer.com
+
 MCP server for AI agents. DrainBrain token safety scoring for Solana tokens. Two payment options: x402 USDC micropayments or API key subscriptions.
 
 Built by [RugSlayer](https://rugslayer.com).
